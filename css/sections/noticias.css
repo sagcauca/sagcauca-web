@@ -1,0 +1,55 @@
+/* Grids */
+.cards-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  align-items: stretch;
+  justify-items: center;
+}
+
+.news-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  max-width: none;
+  margin: 0;
+}
+
+/* Noticias: layout en 2 columnas con Flexbox */
+#blogger-news{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  width: 100%;
+  margin: 0;
+}
+#blogger-news .news-item{
+  flex: 1 1 calc(50% - 12px);
+  max-width: calc(50% - 12px);
+}
+
+.news-date{
+  display: inline-block;
+  font-size: 12px;
+  opacity: .8;
+  margin-bottom: 6px;
+}
+
+.card-link{
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+@media (max-width: 900px){
+  .cards-grid{
+    grid-template-columns: 1fr;
+  }
+  .news-grid{
+    grid-template-columns: 1fr;
+  }
+  #blogger-news .news-item{
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}

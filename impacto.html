@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="Impacto regional de SAG Cauca: proyectos estrat&eacute;gicos que fortalecen el sector agropecuario en el Cauca." name="description"/>
+<title>Impacto Gremial - SAG Cauca</title>
+<link href="css/base.css" rel="stylesheet"/>
+<link href="css/utilities.css" rel="stylesheet"/>
+<link href="css/layout.css" rel="stylesheet"/>
+<link href="css/components.css" rel="stylesheet"/>
+<link href="css/sections/index.css" rel="stylesheet"/>
+<meta content="SAG Cauca" property="og:site_name"/><meta content="website" property="og:type"/><meta content="Impacto Gremial - SAG Cauca" property="og:title"/><meta content="Impacto regional de SAG Cauca: proyectos estrat&eacute;gicos que fortalecen el sector agropecuario en el Cauca." property="og:description"/><meta content="public/img/logosagc.jpg" property="og:image"/><meta content="summary_large_image" name="twitter:card"/><meta content="#0b1f3a" name="theme-color"/><meta content="index, follow" name="robots"/><link href="public/img/logosagc.jpg" rel="icon" type="image/jpeg"/></head>
+<body>
+<div id="site-header"></div>
+<main id="main-content">
+<!-- Hero institucional con logo en tamaño controlado -->
+<div id="site-hero" data-hero-title="Impacto Gremial" data-hero-text="Resultados y proyectos estrat&eacute;gicos que fortalecen el campo caucano."></div>
+<section class="section" id="impacto-regional">
+  <div class="container">
+    <header class="section-header">
+      <h2>Nuestra labor social gremial</h2>
+      <p>
+        Proyectos estrat&eacute;gicos que impulsan la productividad, la sostenibilidad y la
+        competitividad del sector agropecuario en el Cauca.
+      </p>
+    </header>
+    <div class="project-carousel" data-project-carousel>
+      <button class="project-carousel__nav project-carousel__prev" type="button" aria-label="Proyecto anterior" data-project-prev>&larr;</button>
+      <div class="project-carousel__panel">
+        <div class="project-carousel__text">
+          <span class="project-carousel__label">Proyecto</span>
+          <h3 data-project-title>Plan Acopio y Enfriamiento de Leche</h3>
+          <p data-project-description>
+            Tecnolog&iacute;a para el campo. Optimizamos la cadena de fr&iacute;o en Paletar&aacute; para garantizar la calidad de la leche cruda y mejorar la rentabilidad de nuestros productores rurales.
+          </p>
+        </div>
+        <div class="project-carousel__media">
+          <div class="project-carousel__image-frame">
+            <img
+              alt="Plan Acopio y Enfriamiento de Leche"
+              data-project-image
+              decoding="async"
+              loading="lazy"
+              width="720"
+              height="540"
+            />
+          </div>
+          <div class="project-carousel__dots" data-project-dots></div>
+        </div>
+      </div>
+      <button class="project-carousel__nav project-carousel__next" type="button" aria-label="Proyecto siguiente" data-project-next>&rarr;</button>
+
+      <div class="project-carousel__items" hidden>
+        <article class="project-card" data-gallery-images="public/img/leche/leche1.jpg|public/img/leche/leche2.jpg|public/img/leche/leche3.jpg|public/img/leche/leche4.jpg|public/img/leche/leche5.jpg|public/img/leche/leche6.jpg" data-gallery-title="Plan Acopio y Enfriamiento de Leche" data-gallery-description="Tecnolog&iacute;a para el campo. Optimizamos la cadena de fr&iacute;o en Paletar&aacute; para garantizar la calidad de la leche cruda y mejorar la rentabilidad de nuestros productores rurales."></article>
+        <article class="project-card" data-gallery-images="public/img/seda/seda1.jpg|public/img/seda/seda2.jpg|public/img/seda/seda3.jpg|public/img/seda/seda4.jpg|public/img/seda/seda5.jpg|public/img/seda/seda6.jpg|public/img/seda/seda7.jpg" data-gallery-title="Fortalecimiento de la Seda (CORSEDA)" data-gallery-description="Tradici&oacute;n que se transforma. Impulsamos la agrocadena de la seda mediante alianzas estrat&eacute;gicas que elevan los est&aacute;ndares de producci&oacute;n local."></article>
+        <article class="project-card" data-gallery-images="public/img/panelero/panelero1.jpg|public/img/panelero/panelero2.jpg|public/img/panelero/panelero3.jpg" data-gallery-title="Fortalecimiento integral de la cadena panelera" data-gallery-description="Proyecto de reactivaci&oacute;n econ&oacute;mica para la cadena productiva de la ca&ntilde;a panelera en 12 municipios del norte, centro y sur del departamento del Cauca."></article>
+        <article class="project-card" data-gallery-images="public/img/brahman2.jpg" data-gallery-title="Alianza L&aacute;ctea por el Cauca" data-gallery-description="Fortalecemos la productividad y la comercializaci&oacute;n del sector l&aacute;cteo a trav&eacute;s de alianzas con productores y actores regionales."></article>
+      </div>
+    </div>
+    <div class="project-actions">
+      <a class="btn btn-outline btn-brand" href="contacto.html">M&aacute;s informaci&oacute;n</a>
+    </div>
+    <div class="project-modal" id="projectGalleryModal" role="dialog" aria-modal="true" aria-labelledby="projectGalleryTitle">
+      <div class="project-modal__content">
+        <header class="project-modal__header">
+          <div>
+            <h3 class="project-modal__title" id="projectGalleryTitle" data-project-title>Galer&iacute;a</h3>
+            <p class="project-modal__description" data-project-description></p>
+          </div>
+          <button class="project-modal__close" type="button" data-project-close aria-label="Cerrar">&times;</button>
+        </header>
+        <div class="project-modal__body">
+          <div class="project-gallery-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<div id="site-footer"></div>
+<script defer="" src="js/includes.js"></script>
+<script defer="" src="js/main.js?v=3?v=3"></script>
+</body>
+</html>

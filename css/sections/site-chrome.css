@@ -1,0 +1,16 @@
+/* Header and footer chrome */
+.site-header{
+  background: var(--color-brand);
+  color: var(--color-white);
+}
+.site-header .main-nav a{
+  color: var(--color-white);
+}
+.site-footer{
+  background: var(--color-brand);
+  color: var(--color-white);
+  margin-top: 0;
+}
+.site-footer a{
+  color: #e8f7eb;
+}
