@@ -784,10 +784,10 @@
         loadBloggerNews();
         setTimeout(() => loadBloggerNews(true), 2500);
         // Asegura que las imagenes con data-src se resuelvan antes de mostrarlas
-        await loadImagesFromDataSrc();
-        setupHeroCarousel();
-        setupMiniCarousels();
-        initialized = true;
+      await loadImagesFromDataSrc();
+      setupHeroCarousel();
+      setupMiniCarousels();
+      initialized = true;
       } catch (error) {
         console.error("Error durante la inicializacion:", error);
       }
