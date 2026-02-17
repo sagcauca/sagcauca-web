@@ -2,21 +2,21 @@
   // Configuracion base del sitio
   const CONTACT_EMAIL = "sagcauca@gmail.com";
   const WHATSAPP_NUMBER = "573155692130";
-  const HERO_FALLBACK_IMAGE = "public/img/cultivo.jpg";
+  const HERO_FALLBACK_IMAGE = "assets/img/cultivo.jpg";
   const HERO_CAROUSEL_IMAGES = [
-    "public/img_hero/cana.jpg",
-    "public/img_hero/cafetero.jpg",
-    "public/img_hero/forestal.jpg",
-    "public/img_hero/cultivo.jpg",
-    "public/img_hero/pina.jpg",
-    "public/img_hero/limon.jpg",
-    "public/img_hero/mango2.jpg",
-    "public/img_hero/fresa.jpg",
-    "public/img_hero/brahman2.jpg",
-    "public/img_hero/tb.jpg",
-    "public/img_hero/normando1.jpg",
-    "public/img_hero/panelero1.jpg",
-    "public/img_hero/26.jpg",
+    "assets/img_hero/cana.jpg",
+    "assets/img_hero/cafetero.jpg",
+    "assets/img_hero/forestal.jpg",
+    "assets/img_hero/cultivo.jpg",
+    "assets/img_hero/pina.jpg",
+    "assets/img_hero/limon.jpg",
+    "assets/img_hero/mango2.jpg",
+    "assets/img_hero/fresa.jpg",
+    "assets/img_hero/brahman2.jpg",
+    "assets/img_hero/tb.jpg",
+    "assets/img_hero/normando1.jpg",
+    "assets/img_hero/panelero1.jpg",
+    "assets/img_hero/26.jpg",
     
   ];
   const HERO_CAROUSEL_INTERVAL_MS = 4000;
@@ -466,7 +466,7 @@
     if (!src) return "";
     if (/^https?:\/\//i.test(src) || src.startsWith("data:")) return src;
     if (src.startsWith("../") || src.startsWith("./") || src.startsWith("/")) return src;
-    if (src.startsWith("public/")) return `/${src}`;
+    if (src.startsWith("assets/")) return `/${src}`;
     return src;
   };
 
@@ -615,7 +615,7 @@
         carousel.style.setProperty("--mini-src", `url('${cssUrl}')`);
       };
 
-      applyImage(resolved[current] || "public/img/cultivo.jpg");
+      applyImage(resolved[current] || "assets/img/cultivo.jpg");
 
       setInterval(() => {
         img.classList.add("is-fading");
@@ -809,5 +809,6 @@
   });
   window.loadBloggerNews = loadBloggerNews;
 })();
+
 
 
