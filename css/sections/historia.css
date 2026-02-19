@@ -167,4 +167,22 @@
   }
 }
 
+@media (max-width: 900px){
+  .section-historia .history-side{
+    position: static !important;
+    order: -1 !important;
+    justify-content: center !important;
+  }
+  .section-historia .team-gallery{
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 360px !important;
+    max-width: none !important;
+  }
+  .section-historia .team-gallery-grid img{
+    height: 200px !important;
+  }
+}
+
 
