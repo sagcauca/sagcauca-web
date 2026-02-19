@@ -165,6 +165,10 @@
   .section-historia .team-gallery-grid img{
     height: 200px;
   }
+  .section-historia .pillar-text p{
+    text-align: left;
+    line-height: 1.7;
+  }
 }
 
 
