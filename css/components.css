@@ -329,7 +329,7 @@
 /* Impacto regional */
 .project-grid{
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.5rem;
   align-items: stretch;
 }
@@ -499,6 +499,12 @@
   font-size: 1.1rem;
   color: var(--color-brand);
 }
+.project-body p{
+  margin: 0;
+  color: #111111;
+  font-size: 1rem;
+  line-height: 1.6;
+}
 .project-location{
   margin: 0;
   font-size: 0.9rem;
@@ -535,7 +541,7 @@
 }
 @media (max-width: 900px){
   .project-grid{
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .project-carousel{
     grid-template-columns: 1fr;
@@ -556,6 +562,11 @@
   }
   .project-carousel__nav{
     justify-self: center;
+  }
+}
+@media (max-width: 700px){
+  .project-grid{
+    grid-template-columns: 1fr;
   }
 }
 
