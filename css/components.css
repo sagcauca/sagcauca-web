@@ -510,11 +510,14 @@
   color: #111111;
   font-size: 1.08rem;
   line-height: 1.72;
+  text-align: justify;
+  text-justify: inter-word;
 }
 .project-location{
   margin: 0;
   font-size: 0.9rem;
   color: var(--color-muted);
+  text-align: left;
 }
 .project-overlay{
   background: #f7fbf8;
