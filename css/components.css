@@ -327,6 +327,11 @@
 }
 
 /* Impacto regional */
+#impacto-regional .container{
+  max-width: 1480px;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
 .project-grid{
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -566,6 +571,10 @@
   }
 }
 @media (max-width: 700px){
+  #impacto-regional .container{
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
   .project-grid{
     grid-template-columns: 1fr;
     gap: 1.25rem;
