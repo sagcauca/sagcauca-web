@@ -100,6 +100,52 @@
     statusEl.style.color = isError ? "#b23b3b" : "var(--color-brand)";
   };
 
+  const isMobileDevice = () => {
+    const userAgent = navigator.userAgent || "";
+    return (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent) ||
+      (navigator.maxTouchPoints > 1 && /Macintosh/i.test(userAgent))
+    );
+  };
+
+  const openEmailComposer = (email, subject = "", body = "") => {
+    if (!email) return;
+
+    if (isMobileDevice()) {
+      const params = [];
+      if (subject) params.push(`subject=${encodeURIComponent(subject)}`);
+      if (body) params.push(`body=${encodeURIComponent(body)}`);
+      const query = params.join("&");
+      window.location.href = `mailto:${email}${query ? `?${query}` : ""}`;
+      return;
+    }
+
+    const params = new URLSearchParams({
+      view: "cm",
+      fs: "1",
+      to: email,
+    });
+    if (subject) params.set("su", subject);
+    if (body) params.set("body", body);
+    window.open(`https://mail.google.com/mail/?${params.toString()}`, "_blank", "noopener,noreferrer");
+  };
+
+  const setupEmailLinks = () => {
+    document.querySelectorAll(".email-link").forEach((link) => {
+      if (link.dataset.bound === "true") return;
+      link.dataset.bound = "true";
+
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        openEmailComposer(
+          link.dataset.email || link.textContent.trim(),
+          link.dataset.subject || "",
+          link.dataset.body || ""
+        );
+      });
+    });
+  };
+
   const buildBody = ({ nombre, correo, mensaje }) =>
     [
       "Datos de contacto desde el formulario:",
@@ -158,29 +204,13 @@
       return;
     }
 
-    // SOLUCIÓN DEFINITIVA: Usar Gmail compose en lugar de mailto
-    const asunto = encodeURIComponent(`Contacto web - ${nombre}`);
-    const cuerpoCorreo = encodeURIComponent(cuerpo);
-    
-    // Usar Gmail compose (funciona siempre, sin bloqueos de mailto)
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_EMAIL}&su=${asunto}&body=${cuerpoCorreo}`;
-    
-    // Detectar móvil para mejor experiencia
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    if (isMobile) {
-      // En móvil: abrir en la misma ventana
-      window.location.href = gmailUrl;
-    } else {
-      // En computador: abrir en nueva pestaña
-      window.open(gmailUrl, '_blank', 'noopener,noreferrer');
-    }
-    
+    const asunto = `Contacto web - ${nombre}`;
     updateStatus(
       statusEl,
-      "✓ Abriendo Gmail con tu mensaje. Si no se abre, revisa los bloqueadores de popups.",
+      "Abriendo tu correo con el mensaje. Si no se abre, revisa los bloqueadores de ventanas emergentes.",
       false
     );
+    openEmailComposer(CONTACT_EMAIL, asunto, cuerpo);
   };
 
   const setupContactForms = () => {
@@ -794,6 +824,7 @@
     initPromise = (async () => {
       try {
         setupContactForms();
+        setupEmailLinks();
         setupGalleryLightbox();
         setupProjectGallery();
         setupProjectCarousel();
