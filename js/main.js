@@ -160,12 +160,21 @@
 
     const asunto = encodeURIComponent(`Contacto web - ${nombre}`);
     const mailtoUrl = `mailto:${CONTACT_EMAIL}?subject=${asunto}&body=${encodeURIComponent(cuerpo)}`;
-    updateStatus(
-      statusEl,
-      "Abriendo tu cliente de correo. Si no se abre, copia el mensaje y envíalo manualmente."
-    );
-    window.location.href = mailtoUrl;
-  };
+
+    // Intentar abrir con window.open
+    const ventana = window.open(mailtoUrl, '_blank', 'noopener,noreferrer');
+
+    // Verificar si realmente se abrió
+    setTimeout(() => {
+      if (!ventana || ventana.closed) {
+        // Fallback: copiar al portapapeles
+        navigator.clipboard.writeText(`Para: ${CONTACT_EMAIL}\nAsunto: Contacto web - ${nombre}\n\nMensaje:\n${cuerpo}`);
+        updateStatus(statusEl, "✉️ Correo copiado al portapapeles. Envía manualmente.", false);
+      } else {
+        updateStatus(statusEl, "✓ Cliente de correo abierto. Revisa tu programa de correo.", false);
+      }
+    }, 500);
+  };  // ← CIERRE CORRECTO de handleFormSubmit
 
   const setupContactForms = () => {
     const forms = document.querySelectorAll(".contact-form");
@@ -809,6 +818,3 @@
   });
   window.loadBloggerNews = loadBloggerNews;
 })();
-
-
-
