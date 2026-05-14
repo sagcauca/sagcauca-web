@@ -110,105 +110,78 @@
       mensaje,
     ].join("\n");
 
-// Maneja el formulario aplicando sanitización y ARIA para accesibilidad
-const handleFormSubmit = (form) => (event) => {
-  event.preventDefault();
+  // Maneja el formulario aplicando sanitización y ARIA para accesibilidad
+  const handleFormSubmit = (form) => (event) => {
+    event.preventDefault();
 
-  const nombreField = form.querySelector("#nombre");
-  const correoField = form.querySelector("#correo");
-  const canalField = form.querySelector("#canal");
-  const mensajeField = form.querySelector("#mensaje");
-  const nombre = sanitizeInput(nombreField?.value || "");
-  const correo = sanitizeInput(correoField?.value || "");
-  const canal = canalField?.value || "correo";
-  const mensaje = sanitizeInput(mensajeField?.value || "");
-  const statusEl = getStatusElement(form);
+    const nombreField = form.querySelector("#nombre");
+    const correoField = form.querySelector("#correo");
+    const canalField = form.querySelector("#canal");
+    const mensajeField = form.querySelector("#mensaje");
+    const nombre = sanitizeInput(nombreField?.value || "");
+    const correo = sanitizeInput(correoField?.value || "");
+    const canal = canalField?.value || "correo";
+    const mensaje = sanitizeInput(mensajeField?.value || "");
+    const statusEl = getStatusElement(form);
 
-  setInvalid(nombreField, false);
-  setInvalid(correoField, false);
-  setInvalid(mensajeField, false);
+    setInvalid(nombreField, false);
+    setInvalid(correoField, false);
+    setInvalid(mensajeField, false);
 
-  if (!nombre || nombre.length < 3) {
-    setInvalid(nombreField, true);
-    updateStatus(statusEl, "Por favor escribe tu nombre (min. 3 caracteres).", true);
-    return;
-  }
+    if (!nombre || nombre.length < 3) {
+      setInvalid(nombreField, true);
+      updateStatus(statusEl, "Por favor escribe tu nombre (min. 3 caracteres).", true);
+      return;
+    }
 
-  if (!isValidEmail(correo)) {
-    setInvalid(correoField, true);
-    updateStatus(statusEl, "Ingresa un correo electrónico válido.", true);
-    return;
-  }
+    if (!isValidEmail(correo)) {
+      setInvalid(correoField, true);
+      updateStatus(statusEl, "Ingresa un correo electrónico válido.", true);
+      return;
+    }
 
-  if (!mensaje || mensaje.length < 10) {
-    setInvalid(mensajeField, true);
-    updateStatus(statusEl, "Tu mensaje es muy corto. Amplíalo para entenderte mejor.", true);
-    return;
-  }
+    if (!mensaje || mensaje.length < 10) {
+      setInvalid(mensajeField, true);
+      updateStatus(statusEl, "Tu mensaje es muy corto. Amplíalo para entenderte mejor.", true);
+      return;
+    }
 
-  const cuerpo = buildBody({ nombre, correo, mensaje });
+    const cuerpo = buildBody({ nombre, correo, mensaje });
 
-  if (canal === "whatsapp") {
-    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(cuerpo)}`;
+    if (canal === "whatsapp") {
+      const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(cuerpo)}`;
+      updateStatus(
+        statusEl,
+        "Abriendo WhatsApp con tu mensaje. Si no se abre, copia y pégalo manualmente."
+      );
+      window.open(waUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    // SOLUCIÓN DEFINITIVA: Usar Gmail compose en lugar de mailto
+    const asunto = encodeURIComponent(`Contacto web - ${nombre}`);
+    const cuerpoCorreo = encodeURIComponent(cuerpo);
+    
+    // Usar Gmail compose (funciona siempre, sin bloqueos de mailto)
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_EMAIL}&su=${asunto}&body=${cuerpoCorreo}`;
+    
+    // Detectar móvil para mejor experiencia
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+      // En móvil: abrir en la misma ventana
+      window.location.href = gmailUrl;
+    } else {
+      // En computador: abrir en nueva pestaña
+      window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+    }
+    
     updateStatus(
       statusEl,
-      "Abriendo WhatsApp con tu mensaje. Si no se abre, copia y pégalo manualmente."
+      "✓ Abriendo Gmail con tu mensaje. Si no se abre, revisa los bloqueadores de popups.",
+      false
     );
-    window.open(waUrl, "_blank", "noopener,noreferrer");
-    return;
-  }
-
-  const asunto = encodeURIComponent(`Contacto web - ${nombre}`);
-  const mailtoUrl = `mailto:${CONTACT_EMAIL}?subject=${asunto}&body=${encodeURIComponent(cuerpo)}`;
-
-  // Detectar dispositivo móvil
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-  if (isMobile) {
-    // Móvil: método simple
-    window.location.href = mailtoUrl;
-    updateStatus(statusEl, "Abriendo cliente de correo...", false);
-  } else {
-    // COMPUTADOR: múltiples intentos
-    
-    // Intentar 1: window.open (funciona en algunos casos)
-    let ventana = window.open(mailtoUrl, '_blank', 'noopener,noreferrer');
-    
-    setTimeout(() => {
-      if (!ventana || ventana.closed || typeof ventana === 'undefined') {
-        // Intentar 2: crear un enlace invisible y hacer click
-        const link = document.createElement('a');
-        link.href = mailtoUrl;
-        link.target = '_blank';
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        // Intentar 3: fallback final - copiar al portapapeles y mostrar mensaje
-        setTimeout(() => {
-          const textoCorreo = `📧 CORREO: ${CONTACT_EMAIL}\n📝 Asunto: Contacto web - ${nombre}\n\n💬 Mensaje:\n${cuerpo}`;
-          
-          navigator.clipboard.writeText(textoCorreo).then(() => {
-            updateStatus(
-              statusEl, 
-              `✉️ No se pudo abrir el correo automáticamente.\n\n✅ Se copió el mensaje al portapapeles.\n📧 Envía manualmente a: ${CONTACT_EMAIL}`,
-              false
-            );
-          }).catch(() => {
-            updateStatus(
-              statusEl,
-              `❌ No se pudo abrir el correo.\n\n📧 Envía manualmente a: ${CONTACT_EMAIL}\n\n📝 Mensaje:\n${cuerpo.substring(0, 200)}...`,
-              false
-            );
-          });
-        }, 300);
-      } else {
-        updateStatus(statusEl, "✓ Cliente de correo abierto. Si no ves la ventana, revisa tus programas predeterminados.", false);
-      }
-    }, 500);
-  }
-};   // ← CIERRE CORRECTO de handleFormSubmit
+  };
 
   const setupContactForms = () => {
     const forms = document.querySelectorAll(".contact-form");
